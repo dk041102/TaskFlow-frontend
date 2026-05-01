@@ -20,12 +20,12 @@ const Login = () => {
 
     setLoading(true);
     try {
-      // ✅ AuthContext.login now throws on error — this catch correctly fires.
+
       await login(form.email, form.password);
       toast.success('Welcome back!');
       navigate(from, { replace: true });
     } catch (err) {
-      // ✅ FIX: Your backend sends { msg: '...' } not { error: '...' }
+
       toast.error(err.response?.data?.msg || 'Invalid credentials');
     } finally {
       setLoading(false);
