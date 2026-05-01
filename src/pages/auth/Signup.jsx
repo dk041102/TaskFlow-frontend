@@ -9,8 +9,7 @@ const Signup = () => {
 
   const [form, setForm] = useState({ name: '', email: '', password: '', role: 'Member' });
 
-  // ✅ FIX: Original had `const [loading] = useState(false)` — missing setLoading,
-  // so the button could never show "Creating account…" and was never disabled.
+ 
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
@@ -27,8 +26,7 @@ const Signup = () => {
 
     setLoading(true);
     try {
-      // ✅ FIX: AuthContext.signupUser now throws on error (no internal catch),
-      // so this try/catch correctly handles both success and failure.
+    
       await signup(form);
       toast.success('Account created! Welcome 🎉');
       navigate('/dashboard', { replace: true });
