@@ -25,7 +25,7 @@ const Dashboard = () => {
   useEffect(() => {
   const token = localStorage.getItem('token');
 
-  if (!token) return; // ✅ STOP if no token
+  if (!token) return; //  STOP if no token
 
   const fetchAll = async () => {
     try {
@@ -49,7 +49,7 @@ const Dashboard = () => {
       setRecentTasks(allTasks.slice(0, 6));
 
     } catch (err) {
-      console.error(err.response?.data || err.message); // 🔥 important
+      console.error(err.response?.data || err.message);
     } finally {
       setLoading(false);
     }
@@ -60,9 +60,7 @@ const Dashboard = () => {
 
   if (loading) return <div className="page-loading"><Spinner size={36} /></div>;
 
-  // const initials = user?.name
-  //   ? user.name.split(' ').map((w) => w[0]).join('').toUpperCase().slice(0, 2)
-  //   : user?.email?.slice(0, 2).toUpperCase() || '??';
+
 
   const greeting = () => {
     const h = new Date().getHours();
