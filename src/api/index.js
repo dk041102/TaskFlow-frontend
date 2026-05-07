@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  
-  baseURL: 'http://localhost:5055/api',
+  baseURL: 'https://taskflow-backend-qxi9.onrender.com/api',
 });
 
 
