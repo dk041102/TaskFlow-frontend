@@ -29,7 +29,7 @@ API.interceptors.response.use(
 // ─── AUTH
 export const signup = (data) => API.post('/auth/signup', data);
 export const login  = (data) => API.post('/auth/login',  data);
-
+export const getAllUsers = () => API.get('/auth/users');
 // ─── PROJECTS 
 export const getProjects   = ()             => API.get('/projects');
 export const createProject = (data)         => API.post('/projects', data);

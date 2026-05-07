@@ -1,9 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import {
-  getProjects, getTasksByProject, createTask, updateTask,
-  addMember,
-} from '../../api';
+import { getProjects, getTasksByProject, createTask, updateTask, addMember, getAllUsers } from '../../api';
 import { useAuth } from '../../context/AuthContext';
 import { StatusBadge, PriorityBadge, Spinner, EmptyState, OverdueBadge } from '../../components/common/Badges';
 import Modal from '../../components/common/Modal';
@@ -86,18 +83,27 @@ const ProjectDetail = () => {
   useEffect(() => { fetchData(); }, [fetchData]);
 
   // Build user pool from all project members across all projects (for add-member)
-  useEffect(() => {
-    if (allProjects.length) {
-      const seen = new Set();
-      const users = [];
-      allProjects.forEach((p) =>
-        (p.members || []).forEach((m) => {
-          if (!seen.has(m._id)) { seen.add(m._id); users.push(m); }
-        })
-      );
-      setAllUsers(users);
+ useEffect(() => {
+  const fetchUsers = async () => {
+    try {
+      const res = await getAllUsers();
+      setAllUsers(res.data);
+    } catch {
+      // fallback - get users from projects
+      if (allProjects.length) {
+        const seen = new Set();
+        const users = [];
+        allProjects.forEach((p) =>
+          (p.members || []).forEach((m) => {
+            if (!seen.has(m._id)) { seen.add(m._id); users.push(m); }
+          })
+        );
+        setAllUsers(users);
+      }
     }
-  }, [allProjects]);
+  };
+  if (isAdmin) fetchUsers();
+}, [isAdmin, allProjects]);
 
   const handleCreateTask = async (e) => {
     e.preventDefault();
